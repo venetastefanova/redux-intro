@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'; // function that returns HOC
+
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
@@ -28,7 +30,7 @@ class Counter extends Component {
     render () {
         return (
             <div>
-                <CounterOutput value={this.state.counter} />
+                <CounterOutput value={this.props.ctr} />
                 <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
                 <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
                 <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
@@ -38,4 +40,11 @@ class Counter extends Component {
     }
 }
 
-export default Counter;
+//how the state managed by redux should be mapped to props using in this container
+//since here state is changed internally, but props ARE NOT, we usethe props to map to redux state
+const mapStateToProps = state=>{
+    return{
+        ctr: state.counter // coming from the state from redux
+    };
+};
+export default connect(mapStateToProps)(Counter);
