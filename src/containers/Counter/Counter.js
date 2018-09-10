@@ -15,6 +15,13 @@ class Counter extends Component {
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
                 <CounterControl label="Add 5" clicked={this.props.onAddCounter}  />
                 <CounterControl label="Subtract 5" clicked={this.props.onSubstractCounter}  />
+                <hr/>
+                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <ul>
+                    {this.props.storedResults.map(strResult=>(
+                        <li key={strResult.id} onClick={this.props.onDeleteResult}>{strResult.value}</li>
+                    ))}
+                </ul>
             </div>
         );
     }
@@ -24,7 +31,8 @@ class Counter extends Component {
 //since here state is changed internally, but props ARE NOT, we usethe props to map to redux state
 const mapStateToProps = state=>{
     return{
-        ctr: state.counter // coming from the state from redux
+        ctr: state.counter, // coming from the state from reducer
+        storedResults: state.results // coming from the state from the reducer
     };
 };
 
@@ -34,7 +42,9 @@ const mapDispatchToProps = dispatch =>{
         onIncrementCounter: () => dispatch({type:'INCREMENT'}),
         onDecrementCounter:() => dispatch({type:'DECREMENT'}),
         onAddCounter:()=>dispatch({type:'ADD', val: 10}),
-        onSubstractCounter:()=>dispatch({type:'SUBSTRACT', val:15})
+        onSubstractCounter:()=>dispatch({type:'SUBSTRACT', val:15}),
+        onStoreResult:()=>dispatch({type: 'STORE_RESULT'}),
+        onDeleteResult:()=>dispatch({type: 'DELETE_REUSLT'})
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
