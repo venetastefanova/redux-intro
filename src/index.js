@@ -5,10 +5,16 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import {Provider } from 'react-redux'; // allows us to inject the store into components
-import {createStore} from 'redux';
-import reducer from './store/reducer';
+import {createStore, combineReducers} from 'redux';
+import counterReducer from './store/reducers/counter';
+import resultReducer from './store/reducers/result';
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    ctr:counterReducer,
+    res:resultReducer
+});
+
+const store = createStore(rootReducer);
 
 
 
