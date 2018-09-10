@@ -30,6 +30,19 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 results:state.results.concat({id: new Date(), value:state.counter}) // dont use push it cases side effects
             }
+        case 'DELETE_RESULT':
+            // const id=2;
+            // //if the objects in the array have to be changed too, then we need to make copy of them as well
+            // const newArray = [...state.results]; //creating a copy of the array from state
+            // newArray.splice(id,1);
+
+            //returns the values only if the index is different than the id
+            const updatedArray = state.results.filter(result=>result.id !==action.resultElementId);
+            return{
+                ...state,
+                results:updatedArray
+
+            }
 
     }
 
